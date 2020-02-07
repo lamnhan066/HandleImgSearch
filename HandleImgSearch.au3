@@ -16,8 +16,8 @@ Global $__HandleImgSearch_IsDebug 		= False
 Global $_HandleImgSearch_BitmapHandle 	= 0
 
 Global $_HandleImgSearch_HWnd 			= 0
-Global $_HandleImgSearch_X 				= 0
-Global $_HandleImgSearch_Y 				= 0
+Global $_HandleImgSearch_X 			= 0
+Global $_HandleImgSearch_Y 			= 0
 Global $_HandleImgSearch_Width 			= -1
 Global $_HandleImgSearch_Height 		= -1
 Global $_HandleImgSearch_IsUser32 		= False
