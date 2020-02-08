@@ -1,6 +1,8 @@
+> Author: Lâm Thành Nhân\
+> Email: ltnhan.st.94@gmail.com
 # HandleImgSearch cho AutoIt
-> UDF sử dụng với mục đích tìm ảnh trong Handle của cửa sổ. Cải tiến từ UDF ImageSearchEX.au3 và BmpSearch.au3. 
-UDF này được tổng hợp và bổ sung từ nhiều nguồn, đầu mỗi Func sưu tầm mình đều giữ lại thông tin tác giả.
+> UDF sử dụng với mục đích tìm ảnh trong Handle của cửa sổ. Cải tiến từ UDF ImageSearchEX.au3 và BmpSearch.au3.
+> UDF này được tổng hợp và bổ sung từ nhiều nguồn, đầu mỗi Func sưu tầm mình đều giữ lại thông tin tác giả.
 
 ### Hàm sử dụng cho Global:
     _GlobalImgInit($Hwnd = 0, $X = 0, $Y = 0, $Width = -1, $Height = -1, $IsUser32 = False, $IsDebug = False)
