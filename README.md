@@ -1,23 +1,23 @@
-> Author: Lâm Thành Nhân\
-> Email: ltnhan.st.94@gmail.com
+>> Author: Lâm Thành Nhân\
+>> Email: ltnhan.st.94@gmail.com
 # HandleImgSearch cho AutoIt
-> UDF sử dụng với mục đích tìm ảnh trong Handle của cửa sổ. Cải tiến từ UDF ImageSearchEX.au3 và BmpSearch.au3.
+> UDF sử dụng với mục đích tìm ảnh trong Handle của cửa sổ. Cải tiến từ UDF ImageSearchEX.au3 và ImageSearchDLL.au3.\
 > UDF này được tổng hợp và bổ sung từ nhiều nguồn, đầu mỗi Func sưu tầm mình đều giữ lại thông tin tác giả.
 
 ### Hàm sử dụng cho Global:
-    _GlobalImgInit($Hwnd = 0, $X = 0, $Y = 0, $Width = -1, $Height = -1, $IsUser32 = False, $IsDebug = False)
-    _GlobalImgCapture($Hwnd = 0)
-    _GlobalGetBitmap()
-    _GlobalImgSearchRandom($BmpLocal, $IsReCapture = False, $BmpSource = 0, $IsRandom = True)
-    _GlobalImgSearch($BmpLocal, $IsReCapture = False, $BmpSource = 0, $maximg = 5000)
-    _GlobalGetPixel($X, $Y, $IsReCapture = False, $BmpSource = 0)
-    _GlobalPixelCompare($X, $Y, $PixelColor, $Tolerance = 20, $IsReCapture = False, $BmpSource = 0)
+    _GlobalImgInit
+    _GlobalImgCapture
+    _GlobalGetBitmap
+    _GlobalImgSearchRandom
+    _GlobalImgSearch
+    _GlobalGetPixel
+    _GlobalPixelCompare
 ### Hàm sử dụng cho Handle
-    _HandleImgSearch($hwnd, $bmpLocal, $x = 0, $y = 0, $iWidth = -1, $iHeight = -1, $maximg = 5000)
-    _BmpImgSearch($SourceBmp, $FindBmp, $x = 0, $y = 0, $iWidth = -1, $iHeight = -1, $maximg = 5000)
-    _HandleGetPixel($hwnd, $getX, $getY, $x = 0, $y = 0, $Width = -1, $Height = -1)
-    _HandlePixelCompare($hwnd, $getX, $getY, $pixelColor, $tolerance = 20, $x = 0, $y = 0, $Width = -1, $Height = -1)
-    _HandleCapture($hwnd, $x = 0, $y = 0, $Width = -1, $Height = -1, $IsBMP = False, $SavePath = "", $IsUser32 = False)
+    _HandleImgSearch
+    _BmpImgSearch
+    _HandleGetPixel
+    _HandlePixelCompare
+    _HandleCapture
 
 ### Cách sử dụng từng hàm đã được chú thích trong HandleImgSearch.au3.
 ### Ví dụ có sẵn trong Example.au3 cho từng hàm.
