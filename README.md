@@ -1,7 +1,7 @@
 >> Author: Lâm Thành Nhân\
 >> Email: ltnhan.st.94@gmail.com
 # Tìm ảnh trong cửa sổ (inactive) cho AutoIt hỗ trợ tolerance
-> UDF HandleImgSearch.au3 sử dụng với mục đích tìm ảnh trong Handle của cửa sổ (cửa sổ không cần active). Cải tiến từ UDF ImageSearchEX.au3 và ImageSearchDLL.au3 (không phụ thuộcvào file .dll).\
+> UDF HandleImgSearch.au3 sử dụng với mục đích tìm ảnh trong Handle của cửa sổ (cửa sổ không cần active). Cải tiến từ UDF ImageSearchEX.au3 và ImageSearchDLL.au3 (không phụ thuộc vào file .dll).\
 > UDF này được tổng hợp và bổ sung từ nhiều nguồn, đầu mỗi Func sưu tầm mình đều giữ lại thông tin tác giả.
 
 ### Hàm sử dụng cho Global:
