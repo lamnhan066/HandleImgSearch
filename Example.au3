@@ -1,18 +1,20 @@
 ; Author: Lâm Thành Nhân
+; Email: ltnhanst94@gmail.com
 ; ===============================================================================================================================
 ; Ảnh để tìm kiếm nên lưu dạng "24-bit Bitmap"
 ; ===============================================================================================================================
 ; Ví dụ tìm kiếm theo CLASSNN của Nox
 ; ===============================================================================================================================
 
-#include "HandleImgSearch.au3"
+
 #include <Array.au3>
+#include "HandleImgSearch.au3"
 
 Local $Handle = ControlGetHandle("NoxPlayer", "", "[CLASSNN:Qt5QWindowIcon5]")
 
 ;Test Global Functions
 ConsoleWrite("! Test Global Functions" & @CRLF)
-_GlobalImgInit($Handle, 0, 0, -1, -1, False, True)
+_GlobalImgInit($Handle, 0, 0, -1, -1, False, True, 15)
 
 Local $Result
 While 1
@@ -56,7 +58,8 @@ ConsoleWrite(@CRLF)
 ConsoleWrite("! Test Local Functions" & @CRLF)
 ; Test Local Functions
 While 1
-	$Result = _HandleImgSearch($Handle, @ScriptDir & "\Images\NoxBrowser.bmp")
+	$Result = _HandleImgSearch($Handle, @ScriptDir & "\Images\NoxBrowser.bmp", 0, 0, -1, -1, 15)
+
 	If not @error Then
 		ConsoleWrite("_HandleImgSearch: " & $Result[1][0] &" - " & $Result[1][1] & @CRLF)
 	Else
