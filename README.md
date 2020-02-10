@@ -26,5 +26,5 @@
     - Trong hàm _GlobalImgInit và _HandleCapture đều có tham số $IsUser32. Với cách kiểm tra của mình thì True sẽ sử 
     dụng tốt hơn khi làm việc với cửa sổ của Explorer, False sẽ làm việc tốt hơn với các giả lập. Tuỳ mọi người kiểm 
     tra và sử dụng.
-### Phiên bản khác:
-    - BmpSearch: [Branch](https://github.com/ltnhanst94/AutoIt_HandleImgSearch/tree/BmpSearch): Sử dụng UDF BmpSeach (Không hỗ trợ Tolerance, hỗ trợ trả về nhiều vị trí nếu ảnh xuất hiện nhiều lần)
+### Phiên bản khác: [Branch BmpSearch](https://github.com/ltnhanst94/AutoIt_HandleImgSearch/tree/BmpSearch): 
+    - Sử dụng UDF BmpSeach (Không hỗ trợ Tolerance, hỗ trợ trả về nhiều vị trí nếu ảnh xuất hiện nhiều lần).
