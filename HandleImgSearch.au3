@@ -18,11 +18,11 @@ Opt("MustDeclareVars", 1)
 
 Global Const $__BMPSEARCHSRCCOPY 		= 0x00CC0020
 
-Global $_HandleImgSearch_BitmapHandle 	= 0
+Global $_HandleImgSearch_BitmapHandle 		= 0
 
 Global $_HandleImgSearch_HWnd 			= ""
-Global $_HandleImgSearch_X 				= 0
-Global $_HandleImgSearch_Y 				= 0
+Global $_HandleImgSearch_X 			= 0
+Global $_HandleImgSearch_Y 			= 0
 Global $_HandleImgSearch_Width 			= -1
 Global $_HandleImgSearch_Height 		= -1
 Global $_HandleImgSearch_IsDebug 		= False
@@ -66,7 +66,7 @@ Global $__HandleImgSearch_MemoryDll
 ;                  $IsUser32            	- [optional] Sử dụng DllCall User32.dll thay vì _WinAPI_BitBlt (Thử để tìm cái phù hợp).. Default is False.
 ;                  $IsDebug             	- [optional] Cho phép Debug. Default is False.
 ;                  $Tolerance           	- [optional] Giá trị sai số màu. Default is 15.
-;                  $MaxImg	           		- [optional] Số ảnh tối đa để tìm kiếm. Default is 15.
+;                  $MaxImg	           	- [optional] Số ảnh tối đa để tìm kiếm. Default is 15.
 ; ===============================================================================================================================
 Func _GlobalImgInit($Hwnd = $_HandleImgSearch_HWnd, $X = $_HandleImgSearch_X, $Y = $_HandleImgSearch_Y, _
 		$Width = $_HandleImgSearch_Width, $Height = $_HandleImgSearch_Height, $IsUser32 = $_HandleImgSearch_IsUser32, _
@@ -78,7 +78,7 @@ Func _GlobalImgInit($Hwnd = $_HandleImgSearch_HWnd, $X = $_HandleImgSearch_X, $Y
 	$_HandleImgSearch_Height 	= $Height
 	$_HandleImgSearch_IsUser32 	= $IsUser32
 	$_HandleImgSearch_IsDebug 	= $IsDebug
-	$_HandleImgSearch_Tolerance = $Tolerance
+	$_HandleImgSearch_Tolerance 	= $Tolerance
 	$_HandleImgSearch_MaxImg	= $MaxImg
 EndFunc
 
@@ -313,7 +313,7 @@ EndFunc   ;==>_BmpImgSearch
 ; Name ..........: _HandleGetPixel
 ; Description ...: Lấy mã màu tại toạ độ nhất định của ảnh
 ; Syntax ........: _HandleGetPixel($hwnd, $getX, $getY[, $x = 0[, $y = 0[, $Width = -1[, $Height = -1]]]])
-; Parameters ....: $hwnd                		- a handle value.
+; Parameters ....: $hwnd                	- a handle value.
 ;                  $getX, $getY               	- Toạ độ cần lấy màu.
 ;                  $x, $y, $iWidth, $iHeight 	- Vùng ảnh trong handle cần chụp. Mặc định là toàn ảnh chụp từ $hwnd.
 ; Return values .: @error = 1 nếu có lỗi xảy ra.
@@ -334,10 +334,10 @@ EndFunc
 ; Name ..........: _HandlePixelCompare
 ; Description ...: So sánh màu điểm ảnh với tolerance
 ; Syntax ........: _HandlePixelCompare
-; Parameters ....: $hwnd                		- a handle value.
+; Parameters ....: $hwnd                	- a handle value.
 ;                  $getX, $getY               	- Toạ độ cần lấy màu.
-;                  $pixelColor          		- Mã màu cần so sánh.
-;                  $Tolerance          			- Độ lệch màu sắc.
+;                  $pixelColor          	- Mã màu cần so sánh.
+;                  $Tolerance          		- Độ lệch màu sắc.
 ;                  $x, $y, $iWidth, $iHeight 	- Vùng ảnh trong handle cần chụp. Mặc định là toàn ảnh chụp từ $hwnd.
 ; Return values .: None
 ; ===============================================================================================================================
@@ -356,12 +356,12 @@ EndFunc
 ; Name ..........: _HandleCapture
 ; Description ...: Chụp ảnh theo Handle. Nếu Handle = "" sẽ chụp ảnh màn hình hiện tại.
 ; Syntax ........: _HandleCapture
-; Parameters ....: $hwnd                		- Handle của cửa sổ cần chụp. Nếu bỏ trống ("") sẽ chụp ảnh màn hình.
+; Parameters ....: $hwnd                	- Handle của cửa sổ cần chụp. Nếu bỏ trống ("") sẽ chụp ảnh màn hình.
 ;                  $x, $y, $iWidth, $iHeight 	- Vùng ảnh trong handle cần chụp. Mặc định là toàn ảnh chụp từ $hwnd.
-;                  $SavePath            		- Đường dẫn lưu ảnh.
-;                  $IsBMP               		- True: Kết quả trả về là Bitmap.
-;												- False: Kết quả trả về là HBitmap.[Mặc định]
-;				   $IsUser32					- Sử dụng User32.dll thay vì _WinAPI_BitBlt (Thử để tìm tuỳ chọn phù hợp)
+;                  $SavePath            	- Đường dẫn lưu ảnh.
+;                  $IsBMP               	- True: Kết quả trả về là Bitmap.
+;						- False: Kết quả trả về là HBitmap.[Mặc định]
+;		   $IsUser32			- Sử dụng User32.dll thay vì _WinAPI_BitBlt (Thử để tìm tuỳ chọn phù hợp)
 ; ===============================================================================================================================
 Func _HandleCapture($hwnd = "", $x = 0, $y = 0, $Width = -1, $Height = -1, $IsBMP = False, $SavePath = "", $IsUser32 = False)
 	If $hwnd = "" Then
