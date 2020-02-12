@@ -19,9 +19,8 @@
     _HandlePixelCompare
     _HandleCapture
 
-### Cách sử dụng: 
-    Đã chú thích trong HandleImgSearch.au3.
-### Ví dụ: có sẵn trong Example.au3 cho từng hàm.
+### Cách sử dụng và ví dụ: 
+    Chú thích đầu mỗi hàm trong HandleImgSearch.au3 và vi dụ cụ thể có trong Example.au3.
 ### Lưu ý: 
     - Ảnh để tìm kiếm nên lưu dạng "24-bit Bitmap".
     - Trong hàm _GlobalImgInit và _HandleCapture đều có tham số $IsUser32. Với cách kiểm tra của mình thì True sẽ sử 
