@@ -27,4 +27,4 @@
     dụng tốt hơn khi làm việc với cửa sổ của Explorer, False sẽ làm việc tốt hơn với các giả lập. Tuỳ mọi người kiểm 
     tra và sử dụng.
 ### Phiên bản khác: [Branch Master](https://github.com/ltnhanst94/AutoIt_HandleImgSearch/tree/master): 
-    - Sử dụng UDF ImageSearchDLL (Hỗ trợ Tolerance, chưa hỗ trợ trả về nhiều vị trí nếu ảnh xuất hiện nhiều lần).
+    - Sử dụng UDF ImageSearchDLL (Hỗ trợ Tolerance, đã hỗ trợ trả về nhiều vị trí nếu ảnh xuất hiện nhiều lần).
