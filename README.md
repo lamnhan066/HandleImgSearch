@@ -19,8 +19,9 @@
     _HandlePixelCompare
     _HandleCapture
 
-### Cách sử dụng từng hàm đã được chú thích trong HandleImgSearch.au3.
-### Ví dụ có sẵn trong Example.au3 cho từng hàm.
+### Cách sử dụng: 
+    Đã chú thích trong HandleImgSearch.au3.
+### Ví dụ: có sẵn trong Example.au3 cho từng hàm.
 ### Lưu ý: 
     - Ảnh để tìm kiếm nên lưu dạng "24-bit Bitmap".
     - Trong hàm _GlobalImgInit và _HandleCapture đều có tham số $IsUser32. Với cách kiểm tra của mình thì True sẽ sử 
@@ -28,3 +29,13 @@
     tra và sử dụng.
 ### Phiên bản khác: [Branch BmpSearch](https://github.com/ltnhanst94/AutoIt_HandleImgSearch/tree/BmpSearch): 
     - Sử dụng UDF BmpSeach (Không hỗ trợ Tolerance, hỗ trợ trả về nhiều vị trí nếu ảnh xuất hiện nhiều lần).
+### Cập nhật:
+    - 12/02/2020:
+      + Bổ sung Param $MaxImg: Số kết quả trả về tối đa nếu có nhiều ảnh trùng nhau (Có thể tốc độ thực thi không 
+      nhanh bằng BmpSearch vì hoàn toàn sử dụng vòng lặp của AutoIt).
+      + Nếu $Hwnd = "" (Param của một số hàm) sẽ sử dụng ảnh màn hình hiện tại để chụp hoặc tìm kiếm.
+      + Cải thiện và sửa một số lỗi.
+      + Một số thay đổi có thể ảnh hưởng code:
+        - $__HandleImgSearch_IsDebug -> $_HandleImgSearch_IsDebug.
+        - $MaxImg mặc định 1000 nếu không khai báo.
+      
