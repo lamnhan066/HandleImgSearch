@@ -10,78 +10,89 @@
 #include <Array.au3>
 #include "HandleImgSearch.au3"
 
-Local $Handle = ControlGetHandle("NoxPlayer", "", "[CLASSNN:Qt5QWindowIcon5]")
+Local $WindowHandle = ControlGetHandle("NoxPlayer", "", "[CLASSNN:Qt5QWindowIcon5]")
 
 ;Test Global Functions
-ConsoleWrite("! Test Global Functions" & @CRLF)
-_GlobalImgInit($Handle, 0, 0, -1, -1, False, True, 15)
+;~ _TestGlobal(100)
+_TestGlobal(100, $WindowHandle)
 
-Local $Result
-While 1
-	_GlobalImgCapture()
+;Test Handle Functions
+;~ _TestHandle(100)
+_TestHandle(100, $WindowHandle)
 
-	$Result = _GlobalImgSearchRandom(@ScriptDir & "\Images\NoxBrowser.bmp")
-	If not @error Then
-		ConsoleWrite("_GlobalImgSearchRandom: " & $Result[0] &" - " & $Result[1] & @CRLF)
-	Else
-		ConsoleWrite("_GlobalImgSearchRandom: Fail" & @CRLF)
-	EndIf
+Func _TestGlobal($Count, $Handle = "")
+	ConsoleWrite("! Test Global Functions" & @CRLF)
+	; Init
+	_GlobalImgInit($Handle, 0, 0, -1, -1, False, False, 15 , 1000)
+	
+	Local $Result
+	For $i = 1 to $Count
+		_GlobalImgCapture()
+	
+		$Result = _GlobalImgSearchRandom(@ScriptDir & "\Images\NoxBrowser.bmp")
+		If not @error Then
+			ConsoleWrite("_GlobalImgSearchRandom: " & $Result[0] &" - " & $Result[1] & @CRLF)
+		Else
+			ConsoleWrite("_GlobalImgSearchRandom: Fail" & @CRLF)
+		EndIf
+	
+		ConsoleWrite("_GlobalGetBitmap: " &  _GlobalGetBitmap() & @CRLF)
+	
+		$Result = _GlobalImgSearch(@ScriptDir & "\Images\NoxBrowser.bmp")
+		If not @error Then
+			ConsoleWrite("_GlobalImgSearch: (Total: " & $Result[0][0] & "): " & $Result[1][0] &" - " & $Result[1][1] & @CRLF)
+		Else
+			ConsoleWrite("_GlobalImgSearch: Fail" & @CRLF)
+		EndIf
+	
+		$Result = _GlobalGetPixel(100, 100)
+		If not @error Then
+			ConsoleWrite("_GlobalGetPixel: " & $Result & @CRLF)
+		Else
+			ConsoleWrite("_GlobalGetPixel: Fail" & @CRLF)
+		EndIf
+	
+		$Result = _GlobalPixelCompare(100, 100, 20)
+		If not @error Then
+			ConsoleWrite("_GlobalPixelCompare: " & $Result & @CRLF)
+		Else
+			ConsoleWrite("_GlobalPixelCompare: Fail" & @CRLF)
+		EndIf
+	
+		Sleep(10)
+	Next
+EndFunc
 
-	ConsoleWrite("_GlobalGetBitmap: " &  _GlobalGetBitmap() & @CRLF)
+Func _TestHandle($Count, $Handle = "")
+	ConsoleWrite("! Test Local Functions" & @CRLF)
+	; Use for debug mode
+	$_HandleImgSearch_IsDebug = True
+	; Test Local Functions
 
-	$Result = _GlobalImgSearch(@ScriptDir & "\Images\NoxBrowser.bmp")
-	If not @error Then
-		ConsoleWrite("_GlobalImgSearch: " & $Result[1][0] &" - " & $Result[1][1] & @CRLF)
-	Else
-		ConsoleWrite("_GlobalImgSearch: Fail" & @CRLF)
-	EndIf
-
-	$Result = _GlobalGetPixel(100, 100)
-	If not @error Then
-		ConsoleWrite("_GlobalGetPixel: " & $Result & @CRLF)
-	Else
-		ConsoleWrite("_GlobalGetPixel: Fail" & @CRLF)
-	EndIf
-
-	$Result = _GlobalPixelCompare(100, 100, 20)
-	If not @error Then
-		ConsoleWrite("_GlobalPixelCompare: " & $Result & @CRLF)
-	Else
-		ConsoleWrite("_GlobalPixelCompare: Fail" & @CRLF)
-	EndIf
-
-	Sleep(100)
-	ExitLoop
-WEnd
-
-ConsoleWrite(@CRLF)
-ConsoleWrite("! Test Local Functions" & @CRLF)
-; Test Local Functions
-While 1
-	$Result = _HandleImgSearch($Handle, @ScriptDir & "\Images\NoxBrowser.bmp", 0, 0, -1, -1, 15)
-
-	If not @error Then
-		ConsoleWrite("_HandleImgSearch: " & $Result[1][0] &" - " & $Result[1][1] & @CRLF)
-	Else
-		ConsoleWrite("_HandleImgSearch: Fail" & @CRLF)
-	EndIf
-
-	$Result = _HandleGetPixel($Handle, 100, 100)
-	If not @error Then
-		ConsoleWrite("_HandleGetPixel: " & $Result & @CRLF)
-	Else
-		ConsoleWrite("_HandleGetPixel: Fail" & @CRLF)
-	EndIf
-
-	$Result = _HandlePixelCompare($Handle, 100, 100, 20)
-	If not @error Then
-		ConsoleWrite("_HandlePixelCompare: " & $Result & @CRLF)
-	Else
-		ConsoleWrite("_HandlePixelCompare: Fail" & @CRLF)
-	EndIf
-
-	Sleep(100)
-	ExitLoop
-WEnd
-
-
+	Local $Result
+	For $i = 1 to $Count
+		$Result = _HandleImgSearch($Handle, @ScriptDir & "\Images\NoxBrowser.bmp", 0, 0, -1, -1, 15, 1000)
+	
+		If not @error Then
+			ConsoleWrite("_HandleImgSearch (Total: " & $Result[0][0] & "): " & $Result[1][0] &" - " & $Result[1][1] & @CRLF)
+		Else
+			ConsoleWrite("_HandleImgSearch: Fail" & @CRLF)
+		EndIf
+	
+		$Result = _HandleGetPixel($Handle, 100, 100)
+		If not @error Then
+			ConsoleWrite("_HandleGetPixel: " & $Result & @CRLF)
+		Else
+			ConsoleWrite("_HandleGetPixel: Fail" & @CRLF)
+		EndIf
+	
+		$Result = _HandlePixelCompare($Handle, 100, 100, 20)
+		If not @error Then
+			ConsoleWrite("_HandlePixelCompare: " & $Result & @CRLF)
+		Else
+			ConsoleWrite("_HandlePixelCompare: Fail" & @CRLF)
+		EndIf
+	
+		Sleep(10)
+	Next
+EndFunc
