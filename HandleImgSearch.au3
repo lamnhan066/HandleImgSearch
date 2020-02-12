@@ -453,7 +453,7 @@ Func __ImgSearch($x, $y, $right, $bottom, $BitmapFind, $BitmapSource, $tolerance
 
 		Local $LocalPixel = _GDIPlus_BitmapGetPixel($BitmapSource, $PosSplit[1], $PosSplit[2])
 		$LocalPixel = _ColorGetBlue($LocalPixel)
-		$LocalPixel = Hex($LocalPixel > 100 ? $LocalPixel - $Tolerance - 1 : $LocalPixel + $Tolerance + 1, 2)
+		$LocalPixel = Hex($LocalPixel > $Tolerance + 1 ? $LocalPixel - $Tolerance - 1 : $LocalPixel + $Tolerance + 1, 2)
 		_GDIPlus_BitmapSetPixel($BitmapSource, $PosSplit[1], $PosSplit[2], "0xFF0000" & $LocalPixel)
 		_WinAPI_DeleteObject($hBitmapSource)
 
