@@ -48,7 +48,7 @@ Global $__HandleImgSearch_MemoryDll
 ; _GlobalGetPixel($X, $Y, $IsReCapture = False, $BmpSource = 0)
 ; _GlobalPixelCompare($X, $Y, $PixelColor, $Tolerance = $_HandleImgSearch_Tolerance, $IsReCapture = False, $BmpSource = 0)
 
-; #Local Functions# =============================================================================================================
+; #Handle Functions# =============================================================================================================
 ; _HandleImgSearch($hwnd, $bmpLocal, $x = 0, $y = 0, $iWidth = -1, $iHeight = -1, $Tolerance = 15, $MaxImg = 1000)
 ; _BmpImgSearch($SourceBmp, $FindBmp, $x = 0, $y = 0, $iWidth = -1, $iHeight = -1, $Tolerance = 15, $MaxImg = 1000)
 ; _HandleGetPixel($hwnd, $getX, $getY, $x = 0, $y = 0, $Width = -1, $Height = -1)
