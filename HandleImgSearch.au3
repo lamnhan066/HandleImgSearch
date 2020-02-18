@@ -1,7 +1,7 @@
 ; Author: Lâm Thành Nhân
-; Version: 1.0.1
+; Version: 1.0.2
 ; Email: ltnhanst94@gmail.com
-; Base on 
+; Base on
 ; - ImageSearchDLL (Author: kangkeng 2008)
 ; - MemoryCall (Author: Joachim Bauch)
 ; - BinaryCall (Author: Ward)
@@ -48,7 +48,7 @@ Global $__HandleImgSearch_MemoryDll
 ; _GlobalGetPixel($X, $Y, $IsReCapture = False, $BmpSource = 0)
 ; _GlobalPixelCompare($X, $Y, $PixelColor, $Tolerance = $_HandleImgSearch_Tolerance, $IsReCapture = False, $BmpSource = 0)
 
-; #Handle Functions# =============================================================================================================
+; #Local Functions# =============================================================================================================
 ; _HandleImgSearch($hwnd, $bmpLocal, $x = 0, $y = 0, $iWidth = -1, $iHeight = -1, $Tolerance = 15, $MaxImg = 1000)
 ; _BmpImgSearch($SourceBmp, $FindBmp, $x = 0, $y = 0, $iWidth = -1, $iHeight = -1, $Tolerance = 15, $MaxImg = 1000)
 ; _HandleGetPixel($hwnd, $getX, $getY, $x = 0, $y = 0, $Width = -1, $Height = -1)
@@ -93,7 +93,7 @@ Func _GlobalImgCapture($Hwnd = 0)
 	Local $Handle = $_HandleImgSearch_HWnd
 
 	If $Hwnd <> 0 Then $Handle = $Hwnd
-	If not IsHWnd($Handle) and $Handle <> "" Then 
+	If not IsHWnd($Handle) and $Handle <> "" Then
 		Return SetError(1, 0, 0)
 	EndIf
 
@@ -380,17 +380,17 @@ Func _HandleCapture($hwnd = "", $x = 0, $y = 0, $Width = -1, $Height = -1, $IsBM
 		Local $hBMP = _ScreenCapture_Capture("", $x, $y, $Right, $Bottom, False)
 		If @error Then Return SetError(1, 0, 0)
 
-		If $_HandleImgSearch_IsDebug Then 
+		If $_HandleImgSearch_IsDebug Then
 			Local $BMP = _GDIPlus_BitmapCreateFromHBITMAP($hBMP)
 			_GDIPlus_ImageSaveToFile($BMP, $SavePath <> "" ? $SavePath : @ScriptDir & "\HandleCapture.bmp")
 			_GDIPlus_BitmapDispose($BMP)
 		EndIf
-			
+
 		If not $IsBMP Then Return SetError(0, 0, $hBMP)
 
 		Local $BMP = _GDIPlus_BitmapCreateFromHBITMAP($hBMP)
 		If @error Then Return SetError(1, 0, 0)
-		_WinAPI_DeleteObject($hBMP)	
+		_WinAPI_DeleteObject($hBMP)
 		Return SetError(0, 0, $BMP)
 	EndIf
 
@@ -407,16 +407,27 @@ Func _HandleCapture($hwnd = "", $x = 0, $y = 0, $Width = -1, $Height = -1, $IsBM
 	Local $hCDC = _WinAPI_CreateCompatibleDC($hDC)
 	If $Width = -1 Then $Width = _WinAPI_GetWindowWidth($hwnd)
 	If $Height = -1 Then $Height = _WinAPI_GetWindowHeight($hwnd)
-	Local $hBMP = _WinAPI_CreateCompatibleBitmap($hDC, $Width, $Height)
-	_WinAPI_SelectObject($hCDC, $hBMP)
-	If $IsUser32 Then
-		DllCall("User32.dll", "int", "PrintWindow", "hwnd", $hwnd, "hwnd", $hCDC, "int", 0)
-	Else
-		_WinAPI_BitBlt($hCDC, 0, 0, $Width, $Height, $hDC, $x, $y, $__BMPSEARCHSRCCOPY)
-	EndIf
 
-	Local $BMP = _GDIPlus_BitmapCreateFromHBITMAP($hBMP)
-	_WinAPI_DeleteObject($hBMP)
+	If $IsUser32 Then
+		Local $hBMP = _WinAPI_CreateCompatibleBitmap($hDC, _WinAPI_GetWindowWidth($hwnd), _WinAPI_GetWindowHeight($hwnd))
+		_WinAPI_SelectObject($hCDC, $hBMP)
+
+		DllCall("User32.dll", "int", "PrintWindow", "hwnd", $hwnd, "hwnd", $hCDC, "int", 0)
+
+		Local $tempBMP = _GDIPlus_BitmapCreateFromHBITMAP($hBMP)
+		_WinAPI_DeleteObject($hBMP)
+
+		Local $BMP = _GDIPlus_BitmapCloneArea($tempBMP, $x, $y, $Width, $Height, $GDIP_PXF24RGB)
+		_GDIPlus_BitmapDispose($tempBMP)
+	Else
+		Local $hBMP = _WinAPI_CreateCompatibleBitmap($hDC, $Width, $Height)
+		_WinAPI_SelectObject($hCDC, $hBMP)
+
+		_WinAPI_BitBlt($hCDC, 0, 0, $Width, $Height, $hDC, $x, $y, $__BMPSEARCHSRCCOPY)
+
+		Local $BMP = _GDIPlus_BitmapCreateFromHBITMAP($hBMP)
+		_WinAPI_DeleteObject($hBMP)
+	EndIf
 
 	If $_HandleImgSearch_IsDebug Then
 		_GDIPlus_ImageSaveToFile($BMP, $SavePath = "" ? @ScriptDir & "\HandleCapture.bmp" : $SavePath)
@@ -437,12 +448,12 @@ EndFunc   ;==>_HandleCapture
 #Region Internal Functions
 ; Author: Lâm Thành Nhân
 Func __ImgSearch($x, $y, $right, $bottom, $BitmapFind, $BitmapSource, $tolerance = 15, $MaxImg = 1000)
-	If $_HandleImgSearch_IsDebug Then 
+	If $_HandleImgSearch_IsDebug Then
 		_GDIPlus_ImageSaveToFile($BitmapSource, @ScriptDir & "\HandleImgSearchSource.bmp")
 		_GDIPlus_ImageSaveToFile($BitmapFind, @ScriptDir & "\HandleImgSearchFind.bmp")
 	EndIf
 
-	Local $hBitmapFind = _GDIPlus_BitmapCreateHBITMAPFromBitmap($BitmapFind)	
+	Local $hBitmapFind = _GDIPlus_BitmapCreateHBITMAPFromBitmap($BitmapFind)
 	Local $hBitmapSource = _GDIPlus_BitmapCreateHBITMAPFromBitmap($BitmapSource)
 	Local $Pos, $Error = 0
 	Dim $PosAr[1][4] = [[0,0,0,0]]
@@ -456,13 +467,13 @@ Func __ImgSearch($x, $y, $right, $bottom, $BitmapFind, $BitmapSource, $tolerance
 			"int", $Tolerance, _
 			"ptr", $hBitmapFind, _
 			"ptr", $hBitmapSource)
-		If @error Then 
+		If @error Then
 			$Error = $i = 1 ? 1 : 0; Nếu không tìm được sẽ trả về @error 1
-			ExitLoop 
+			ExitLoop
 		EndIf
-		If $Pos[0] = 0 Then 
+		If $Pos[0] = 0 Then
 			$Error = $i = 1 ? 1 : 0 ; Nếu không tìm được sẽ trả về @error 1
-			ExitLoop 
+			ExitLoop
 		EndIf
 		Local $PosSplit = StringSplit($Pos[0], "|", 2)
 		Redim $PosAr[$i + 1][4]
@@ -483,7 +494,7 @@ Func __ImgSearch($x, $y, $right, $bottom, $BitmapFind, $BitmapSource, $tolerance
 		$hBitmapSource = _GDIPlus_BitmapCreateHBITMAPFromBitmap($BitmapSource)
 	Next
 
-	If $_HandleImgSearch_IsDebug Then 
+	If $_HandleImgSearch_IsDebug Then
 		_GDIPlus_ImageSaveToFile($BitmapSource, @ScriptDir & "\HandleImgSearchSourceFilter.bmp")
 		_GDIPlus_ImageSaveToFile($BitmapFind, @ScriptDir & "\HandleImgSearchFindFilter.bmp")
 	EndIf
@@ -506,7 +517,7 @@ EndFunc
 Func __HandleImgSearch_Shutdown()
 	_GDIPlus_ImageDispose($_HandleImgSearch_BitmapHandle)
 	_GDIPlus_Shutdown()
-EndFunc   
+EndFunc
 
 ;Author: jvanegmond
 Func _ColorInBounds($pMColor, $pTColor, $pVariation)
