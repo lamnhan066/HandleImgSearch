@@ -382,7 +382,7 @@ Func _HandleCapture($hwnd = "", $x = 0, $y = 0, $Width = -1, $Height = -1, $IsBM
 
 		If $_HandleImgSearch_IsDebug Then
 			Local $BMP = _GDIPlus_BitmapCreateFromHBITMAP($hBMP)
-			_GDIPlus_ImageSaveToFile($BMP, $SavePath <> "" ? $SavePath : @ScriptDir & "\HandleCapture.bmp")
+			_GDIPlus_ImageSaveToFile($BMP, $SavePath <> "" ? $SavePath : @ScriptDir & "\HandleCapture0.bmp")
 			_GDIPlus_BitmapDispose($BMP)
 		EndIf
 
@@ -394,25 +394,26 @@ Func _HandleCapture($hwnd = "", $x = 0, $y = 0, $Width = -1, $Height = -1, $IsBM
 		Return SetError(0, 0, $BMP)
 	EndIf
 
-	If Not IsHWnd($hwnd) Then $hwnd = HWnd($hwnd)
+	Local $Handle = $Hwnd
+	If Not IsHWnd($Handle) Then $Handle = HWnd($Hwnd)
 	If @error Then
-		$hwnd = WinGetHandle($hwnd)
+		$Handle = WinGetHandle($Hwnd)
 		If @error Then
 			ConsoleWrite("! _HandleCapture error: Handle error!")
 			Return SetError(1, 0, 0)
 		EndIf
 	EndIf
 
-	Local $hDC = _WinAPI_GetDC($hwnd)
+	Local $hDC = _WinAPI_GetDC($Handle)
 	Local $hCDC = _WinAPI_CreateCompatibleDC($hDC)
-	If $Width = -1 Then $Width = _WinAPI_GetWindowWidth($hwnd)
-	If $Height = -1 Then $Height = _WinAPI_GetWindowHeight($hwnd)
+	If $Width = -1 Then $Width = _WinAPI_GetWindowWidth($Handle)
+	If $Height = -1 Then $Height = _WinAPI_GetWindowHeight($Handle)
 
 	If $IsUser32 Then
-		Local $hBMP = _WinAPI_CreateCompatibleBitmap($hDC, _WinAPI_GetWindowWidth($hwnd), _WinAPI_GetWindowHeight($hwnd))
+		Local $hBMP = _WinAPI_CreateCompatibleBitmap($hDC, _WinAPI_GetWindowWidth($Handle), _WinAPI_GetWindowHeight($Handle))
 		_WinAPI_SelectObject($hCDC, $hBMP)
 
-		DllCall("User32.dll", "int", "PrintWindow", "hwnd", $hwnd, "hwnd", $hCDC, "int", 0)
+		DllCall("User32.dll", "int", "PrintWindow", "hwnd", $Handle, "hwnd", $hCDC, "int", 0)
 
 		Local $tempBMP = _GDIPlus_BitmapCreateFromHBITMAP($hBMP)
 		_WinAPI_DeleteObject($hBMP)
@@ -430,10 +431,10 @@ Func _HandleCapture($hwnd = "", $x = 0, $y = 0, $Width = -1, $Height = -1, $IsBM
 	EndIf
 
 	If $_HandleImgSearch_IsDebug Then
-		_GDIPlus_ImageSaveToFile($BMP, $SavePath = "" ? @ScriptDir & "\HandleCapture.bmp" : $SavePath)
+		_GDIPlus_ImageSaveToFile($BMP, $SavePath = "" ? @ScriptDir & "\HandleCapture1.bmp" : $SavePath)
 	EndIf
 
-	_WinAPI_ReleaseDC($hwnd, $hDC)
+	_WinAPI_ReleaseDC($Handle, $hDC)
 	_WinAPI_DeleteDC($hCDC)
 
 	If $IsBMP Then Return SetError(0, 0, $BMP)
