@@ -37,4 +37,6 @@
       + Một số thay đổi có thể ảnh hưởng code:
         - $__HandleImgSearch_IsDebug -> $_HandleImgSearch_IsDebug.
         - $MaxImg mặc định 1000 nếu không khai báo.
+    - 29/02/2020:
+      + Sửa lỗi tìm handle sai khi sử dụng tên cửa sổ.
       
