@@ -4,6 +4,17 @@
 > UDF HandleImgSearch.au3 sử dụng với mục đích tìm ảnh trong Handle của cửa sổ (cửa sổ không cần active). Cải tiến từ UDF ImageSearchEX.au3 và ImageSearchDLL.au3 (không phụ thuộc vào file .dll).\
 > UDF này được tổng hợp và bổ sung từ nhiều nguồn, đầu mỗi Func sưu tầm mình đều giữ lại thông tin tác giả.
 
+### Ưu điểm:
+    - Rất nhanh nhờ embbed ImageSearchDll, không phụ thuộc file khác.
+    - Hỗ trợ Tolerance (Sai số màu sắc) và MaxImg (Tìm nhiều ảnh cùng lúc).
+    - Tối ưu tốt, không leak memory (trong giới hạn test của mình).
+    - Tìm kiếm qua Handle cửa sổ hoặc toàn màn hình dễ dàng.
+    - Hỗ trợ global function, chỉ chụp 1 lần, tái sử dụng nhiều lần để tiết kiệm thời gian chụp ảnh.
+    - Có ví dụ kèm theo cho từng hàm.
+### Nhược điểm:
+    - Tốc độ tìm nhiều ảnh sẽ chậm hơn BmpSearch đôi chút (Có Branch BmpSearch kèm theo).
+    - Chỉ hỗ trợ 32bit (Mình nghĩ không quá quan trọng).
+
 ### Hàm sử dụng cho Global:
     _GlobalImgInit
     _GlobalImgCapture
