@@ -50,4 +50,6 @@
         - $MaxImg mặc định 1000 nếu không khai báo.
     - 29/02/2020:
       + Sửa lỗi tìm handle sai khi sử dụng tên cửa sổ.
+    - 14/05/2020:
+      + Cải thiên tốc độ tìm kiếm
       
