@@ -13,7 +13,7 @@
     - Có ví dụ kèm theo cho từng hàm.
 ### Nhược điểm:
     - Tốc độ tìm nhiều ảnh sẽ chậm hơn BmpSearch đôi chút (Có Branch BmpSearch kèm theo).
-    - Chỉ hỗ trợ 32bit (Mình nghĩ không quá quan trọng).
+    - Hiện tại chỉ hỗ trợ compile AutoIt 32bit.
 
 ### Hàm sử dụng cho Global:
     _GlobalImgInit
