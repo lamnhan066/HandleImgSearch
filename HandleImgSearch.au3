@@ -1,5 +1,5 @@
 ; Author: Lâm Thành Nhân
-; Version: 1.0.2
+; Version: 1.0.3
 ; Email: ltnhanst94@gmail.com
 ; Base on
 ; - ImageSearchDLL (Author: kangkeng 2008)
@@ -45,11 +45,13 @@ Global $__HandleImgSearch_MemoryDll
 ; _GlobalGetBitmap()
 ; _GlobalImgSearchRandom($BmpLocal, $IsReCapture = False, $BmpSource = 0, $IsRandom = True, $Tolerance = $_HandleImgSearch_Tolerance, $MaxImg = $_HandleImgSearch_MaxImg)
 ; _GlobalImgSearch($BmpLocal, $IsReCapture = False, $BmpSource = 0, $Tolerance = $_HandleImgSearch_Tolerance, $MaxImg = $_HandleImgSearch_MaxImg)
+; _GlobalImgWaitExist($BmpLocal, $TimeOutSecs = 5, $Tolerance = $_HandleImgSearch_Tolerance, $MaxImg = $_HandleImgSearch_MaxImg)
 ; _GlobalGetPixel($X, $Y, $IsReCapture = False, $BmpSource = 0)
 ; _GlobalPixelCompare($X, $Y, $PixelColor, $Tolerance = $_HandleImgSearch_Tolerance, $IsReCapture = False, $BmpSource = 0)
 
 ; #Local Functions# =============================================================================================================
 ; _HandleImgSearch($hwnd, $bmpLocal, $x = 0, $y = 0, $iWidth = -1, $iHeight = -1, $Tolerance = 15, $MaxImg = 1000)
+; _HandleImgWaitExist($hwnd, $bmpLocal, $timeOutSecs = 5, $x = 0, $y = 0, $iWidth = -1, $iHeight = -1, $Tolerance = 15, $MaxImg = 1000)
 ; _BmpImgSearch($SourceBmp, $FindBmp, $x = 0, $y = 0, $iWidth = -1, $iHeight = -1, $Tolerance = 15, $MaxImg = 1000)
 ; _HandleGetPixel($hwnd, $getX, $getY, $x = 0, $y = 0, $Width = -1, $Height = -1)
 ; _HandlePixelCompare($hwnd, $getX, $getY, $pixelColor, $tolerance = 15, $x = 0, $y = 0, $Width = -1, $Height = -1)
@@ -144,17 +146,17 @@ EndFunc
 Func _GlobalImgSearchRandom($BmpLocal, $IsReCapture = False, $BmpSource = 0, $IsRandom = True, $Tolerance = $_HandleImgSearch_Tolerance, $MaxImg = $_HandleImgSearch_MaxImg)
 	Local $Pos = _GlobalImgSearch($BmpLocal, $IsReCapture, $BmpSource, $Tolerance, $MaxImg)
 	If @error Then
-		Local $Result[2] = [-1, -1]
-		Return SetError(1, 0, $Result)
+		Local $Results[2] = [-1, -1]
+		Return SetError(1, 0, $Results)
 	EndIf
 
 	If not $IsRandom Then
-		Local $Result[2] = [$Pos[1][0], $Pos[1][1]]
+		Local $Results[2] = [$Pos[1][0], $Pos[1][1]]
 	Else
-		Local $Result[2] = [Random($Pos[1][0], $Pos[1][0] + $Pos[1][2], 1), Random($Pos[1][1], $Pos[1][1] + $Pos[1][3], 1)]
+		Local $Results[2] = [Random($Pos[1][0], $Pos[1][0] + $Pos[1][2], 1), Random($Pos[1][1], $Pos[1][1] + $Pos[1][3], 1)]
 	EndIf
 
-	Return SetError(0, 0, $Result)
+	Return SetError(0, 0, $Results)
 EndFunc
 
 ; #FUNCTION# ====================================================================================================================
@@ -191,8 +193,42 @@ Func _GlobalImgSearch($BmpLocal, $IsReCapture = False, $BmpSource = 0, $Toleranc
 	Local $BmpClone = _GDIPlus_BitmapCloneArea($BMP, 0, 0, $Width, $Height, $GDIP_PXF24RGB)
 	If @error Then Return SetError(2, 0, 0)
 
-	Local $pos = _HandleImgSearch("*" & $BmpClone, $BmpLocal, 0, 0, -1, -1, $Tolerance, $MaxImg)
-	Return SetError(@error, 0, $pos)
+	Local $Results = _HandleImgSearch("*" & $BmpClone, $BmpLocal, 0, 0, -1, -1, $Tolerance, $MaxImg)
+	Return SetError(@error, 0, $Results)
+EndFunc
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _GlobalImgWaitExist
+; Description ...: Tìm ảnh trong Handle đã khai báo
+; Syntax ........: _GlobalImgWaitExist
+; Parameters ....: $BmpLocal            - Đường dẫn của ảnh BMP cần tìm.
+;                  $TimeOutSecs         - [optional] Thời gian tìm ảnh tối đa (giây). Default is False.
+;                  $Tolerance           - [optional] Độ lệch màu sắc của ảnh.
+;                  $MaxImg          	- [optional] Số kết quả trả về tối đa.
+; Return values .: Thành công: Returns a 2d array with the following format:
+;							$aCords[0][0]  		= Tổng số vị trí tìm được
+;							$aCords[$i][0]		= Toạ độ X
+;							$aCords[$i][1] 		= Toạ độ Y
+;							$aCords[$i][2] 		= Width của bitmap
+;							$aCords[$i][3] 		= Height của bitmap
+;					Lỗi: @error khác 0
+; ===============================================================================================================================
+Func _GlobalImgWaitExist($BmpLocal, $TimeOutSecs = 5, $Tolerance = $_HandleImgSearch_Tolerance, $MaxImg = $_HandleImgSearch_MaxImg)
+	Local $Handle = $_HandleImgSearch_HWnd
+
+	If $Hwnd <> 0 Then $Handle = $Hwnd
+	If not IsHWnd($Handle) and $Handle <> "" Then
+		Return SetError(1, 0, 0)
+	EndIf
+
+	Local $Results = _HandleImgWaitExist($Handle, $BmpLocal, _
+		$_HandleImgSearch_X, _
+		$_HandleImgSearch_Y, _
+		$_HandleImgSearch_Width, _
+		$_HandleImgSearch_Height, _
+		$Tolerance, _
+		$MaxImg)
+	Return SetError(@error, 0, $Results)
 EndFunc
 
 ; #FUNCTION# ====================================================================================================================
@@ -289,6 +325,39 @@ Func _HandleImgSearch($hwnd, $bmpLocal, $x = 0, $y = 0, $iWidth = -1, $iHeight =
 	Local $pos = __ImgSearch(0, 0, _GDIPlus_ImageGetWidth($BMP), _GDIPlus_ImageGetHeight($BMP), $Bitmap, $BMP, $Tolerance, $MaxImg)
 	Return SetError(@error, 0, $pos)
 EndFunc   ;==>_HandleImgSearch
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _HandleImgWaitExist
+; Description ...: Tìm ảnh trong Handle. Nếu $hwnd = "" sẽ tìm trong toàn màn hình hiện tại.
+; Syntax ........: _HandleImgWaitExist
+; Parameters ....: $hwnd                		- Handle của cửa sổ cần chụp. Nếu để trống "" sẽ tự chụp ảnh desktop.
+;                  $bmpLocal            		- Đường dẫn đến ảnh BMP cần tìm.
+;                  $timeOutSecs            		- Thời gian tìm tối đa (tính bằng giây).
+;                  $x, $y, $iWidth, $iHeight 	- Vùng tìm kiếm. Mặc định là toàn ảnh chụp từ $hwnd.
+;                  $Tolerance              		- Độ lệch màu sắc của ảnh.
+;                  $MaxImg              		- Số ảnh tối đa trả về.
+; Return values .: Success: Returns a 2d array with the following format:
+;							$aCords[0][0]  		= Tổng số vị trí tìm được
+;							$aCords[$i][0]		= Toạ độ X
+;							$aCords[$i][1] 		= Toạ độ Y
+;							$aCords[$i][2] 		= Width của bitmap
+;							$aCords[$i][3] 		= Height của bitmap
+;
+;					Failure: Returns 0 and sets @error to 1
+; ===============================================================================================================================
+Func _HandleImgWaitExist($hwnd, $bmpLocal, $timeOutSecs = 5, $x = 0, $y = 0, $iWidth = -1, $iHeight = -1, $Tolerance = 15, $MaxImg = 1000)
+	$timeOutSecs = $timeOutSecs*1000
+	Local $timeStart = TimerInit()
+
+	Local $Results
+	While TimerDiff($timeStart) < $timeOutSecs
+		$Results = _HandleImgSearch($hwnd, $bmpLocal, $x, $y, $iWidth, $iHeight, $Tolerance, $MaxImg)
+		If Not @error Then Return SetError(0, 0, $Results)
+
+		Sleep(100)
+	WEnd
+	Return SetError(1, 0, $Results)
+EndFunc
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _BmpImgSearch
@@ -458,6 +527,11 @@ Func __ImgSearch($x, $y, $right, $bottom, $BitmapFind, $BitmapSource, $tolerance
 	Local $hBitmapSource = _GDIPlus_BitmapCreateHBITMAPFromBitmap($BitmapSource)
 	Local $Pos, $Error = 0
 	Dim $PosAr[1][4] = [[0,0,0,0]]
+	
+	; Tính trước giá trị màu sắc pixel cần thay đổi khi tìm được kết quả
+	Local $LocalPixel = _GDIPlus_BitmapGetPixel($BitmapFind, 0, 0)
+	$LocalPixel = _ColorGetBlue($LocalPixel)
+	$LocalPixel = "0xFF0000" & Hex($LocalPixel > $Tolerance + 1 ? $LocalPixel - $Tolerance - 1 : $LocalPixel + $Tolerance + 1, 2)
 
 	For $i = 1 to $MaxImg
 		$Pos = MemoryDllCall($__HandleImgSearch_MemoryDll, "str","ImageSearchExt", _
@@ -484,11 +558,12 @@ Func __ImgSearch($x, $y, $right, $bottom, $BitmapFind, $BitmapSource, $tolerance
 		$PosAr[$i][2] = $PosSplit[3]
 		$PosAr[$i][3] = $PosSplit[4]
 
-		Local $LocalPixel = _GDIPlus_BitmapGetPixel($BitmapSource, $PosSplit[1], $PosSplit[2])
-		$LocalPixel = _ColorGetBlue($LocalPixel)
-		$LocalPixel = Hex($LocalPixel > $Tolerance + 1 ? $LocalPixel - $Tolerance - 1 : $LocalPixel + $Tolerance + 1, 2)
-		_GDIPlus_BitmapSetPixel($BitmapSource, $PosSplit[1], $PosSplit[2], "0xFF0000" & $LocalPixel)
+		; Set lại màu sắc của vị trí ảnh vừa tìm được
+		_GDIPlus_BitmapSetPixel($BitmapSource, $PosSplit[1], $PosSplit[2], $LocalPixel)
 		_WinAPI_DeleteObject($hBitmapSource)
+		
+		; Xác định lại toạ độ $y để không phải tìm từ đầu nếu tìm nhiều ảnh
+		$y = $PosSplit[2]
 
 		; Thao tác với ImageSearchExt đã xoá ảnh $hBitmapFind
 		$hBitmapFind = _GDIPlus_BitmapCreateHBITMAPFromBitmap($BitmapFind)
