@@ -1,5 +1,5 @@
 ; Author: Lâm Thành Nhân
-; Version: 1.0.3
+; Version: 1.0.4
 ; Email: ltnhanst94@gmail.com
 ; Base on
 ; - ImageSearchDLL (Author: kangkeng 2008)
@@ -216,7 +216,6 @@ EndFunc
 Func _GlobalImgWaitExist($BmpLocal, $TimeOutSecs = 5, $Tolerance = $_HandleImgSearch_Tolerance, $MaxImg = $_HandleImgSearch_MaxImg)
 	Local $Handle = $_HandleImgSearch_HWnd
 
-	If $Hwnd <> 0 Then $Handle = $Hwnd
 	If not IsHWnd($Handle) and $Handle <> "" Then
 		Return SetError(1, 0, 0)
 	EndIf
