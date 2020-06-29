@@ -52,4 +52,6 @@
       + Sửa lỗi tìm handle sai khi sử dụng tên cửa sổ.
     - 14/05/2020:
       + Cải thiên tốc độ tìm kiếm.
+    - 29/06/2020:
+      + Sửa lỗi hàm _GlobalImgWaitExist.
       
