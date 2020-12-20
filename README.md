@@ -55,4 +55,6 @@
       + Cải thiên tốc độ tìm kiếm.
     - 29/06/2020:
       + Sửa lỗi hàm _GlobalImgWaitExist.
+
+### Donate me: [donate](https://unghotoi.com/lifesautomation)
       
