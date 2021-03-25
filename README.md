@@ -1,12 +1,12 @@
 >> Author: Lâm Thành Nhân\
 >> Email: ltnhan.st.94@gmail.com
-# English version on [AutoItScript](https://www.autoitscript.com/forum/topic/201757-handleimgsearch-image-search-with-imagesearchdll-embedded/).
-# Tìm ảnh trong cửa sổ (inactive) cho AutoIt hỗ trợ tolerance
+# ENGLISH on [AutoItScript](https://www.autoitscript.com/forum/topic/201757-handleimgsearch-image-search-with-imagesearchdll-embedded/).
+# Tìm ảnh trong cửa sổ (inactive) cho AutoIt hỗ trợ tolerance:
 > UDF HandleImgSearch.au3 sử dụng với mục đích tìm ảnh trong Handle của cửa sổ (cửa sổ không cần active). Cải tiến từ UDF ImageSearchEX.au3 và ImageSearchDLL.au3 (không phụ thuộc vào file .dll).\
 > UDF này được tổng hợp và bổ sung từ nhiều nguồn, đầu mỗi Func sưu tầm mình đều giữ lại thông tin tác giả.
 
 ### Ưu điểm:
-    - Rất nhanh nhờ embbed ImageSearchDll, không phụ thuộc file khác.
+    - Rất nhanh nhờ embbed ImageSearchDll, không phụ thuộc .dll (Chỉ cần include UDF là đủ).
     - Hỗ trợ Tolerance (Sai số màu sắc) và MaxImg (Tìm nhiều ảnh cùng lúc).
     - Tối ưu tốt, không leak memory (trong giới hạn test của mình).
     - Tìm kiếm qua Handle cửa sổ hoặc toàn màn hình dễ dàng.
@@ -39,8 +39,8 @@
     dụng tốt hơn khi làm việc với cửa sổ của Explorer, False sẽ làm việc tốt hơn với các giả lập. Tuỳ mọi người kiểm 
     tra và sử dụng.
     - Chỉ dùng được khi compile bản AutoIt 32bit.
-### Phiên bản khác: [Branch BmpSearch](https://github.com/ltnhanst94/AutoIt_HandleImgSearch/tree/BmpSearch): 
-    - Sử dụng UDF BmpSeach (Không hỗ trợ Tolerance, hỗ trợ trả về nhiều vị trí nếu ảnh xuất hiện nhiều lần).
+### Phiên bản khác:  
+    - [BmpSearch](https://github.com/ltnhanst94/AutoIt_HandleImgSearch/tree/BmpSearch): Sử dụng UDF BmpSeach (Không hỗ trợ Tolerance, hỗ trợ trả về nhiều vị trí nếu ảnh xuất hiện nhiều lần).
 ### Cập nhật:
     - 12/02/2020:
       + Bổ sung Param $MaxImg: Số kết quả trả về tối đa nếu có nhiều ảnh trùng nhau (Có thể tốc độ thực thi không 
@@ -57,5 +57,6 @@
     - 29/06/2020:
       + Sửa lỗi hàm _GlobalImgWaitExist.
 
-### Donate me: [donate](https://unghotoi.com/lifesautomation)
+### Give me a coffee:
+    - PayPal: lamnhan066@gmail.com
       
