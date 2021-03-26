@@ -57,6 +57,7 @@
     - 29/06/2020:
       + Sửa lỗi hàm _GlobalImgWaitExist.
 
-### Give me a coffee:
-    - PayPal: lamnhan066@gmail.com
-      
+### Give me a coffee
+<a href="https://paypal.me/lamnhan066" rel="ugc"><img src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-100px.png" alt="Paypal" /></a>
+<a href="https://www.buymeacoffee.com/lamnhan066" target="_blank" rel="ugc"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" /></a></p>
+
