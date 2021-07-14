@@ -39,6 +39,8 @@
     dụng tốt hơn khi làm việc với cửa sổ của Explorer, False sẽ làm việc tốt hơn với các giả lập. Tuỳ mọi người kiểm 
     tra và sử dụng.
     - Chỉ dùng được khi compile bản AutoIt 32bit.
+### Lỗi thường gặp:
+    - Chụp trình duyệt (thường xảy ra ở Chrome hoặc Chromium) không thấy ảnh: hãy thử tắt chế độ tăng tốc phần cứng (let try to disable the Hardware Acceleration mode).
 ### Phiên bản khác:  
    - [BmpSearch](https://github.com/ltnhanst94/AutoIt_HandleImgSearch/tree/BmpSearch): Sử dụng UDF BmpSeach (Không hỗ trợ Tolerance, hỗ trợ trả về nhiều vị trí nếu ảnh xuất hiện nhiều lần).
 ### Cập nhật:
