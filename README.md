@@ -1,6 +1,12 @@
 >> Author: Lâm Thành Nhân\
 >> Email: ltnhan.st.94@gmail.com
 # ENGLISH on [AutoItScript](https://www.autoitscript.com/forum/topic/201757-handleimgsearch-image-search-with-imagesearchdll-embedded/).
+
+### Give me a coffee
+<a href="https://paypal.me/lamnhan066" rel="ugc"><img src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-100px.png" alt="Paypal" /></a>
+<a href="https://www.buymeacoffee.com/lamnhan066" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+<a href="https://nhantien.momo.vn/nMu93PhbO97" target="_blank" rel="ugc"><img src="https://static.mservice.io/img/logo-momo.png" alt="MoMo" height="42" width="42" /></a>
+
 # Tìm ảnh trong cửa sổ (inactive) cho AutoIt hỗ trợ tolerance:
 > UDF HandleImgSearch.au3 sử dụng với mục đích tìm ảnh trong Handle của cửa sổ (cửa sổ không cần active). Cải tiến từ UDF ImageSearchEX.au3 và ImageSearchDLL.au3 (không phụ thuộc vào file .dll).\
 > UDF này được tổng hợp và bổ sung từ nhiều nguồn, đầu mỗi Func sưu tầm mình đều giữ lại thông tin tác giả.
@@ -58,8 +64,3 @@
       + Cải thiên tốc độ tìm kiếm.
     - 29/06/2020:
       + Sửa lỗi hàm _GlobalImgWaitExist.
-
-### Give me a coffee
-<a href="https://paypal.me/lamnhan066" rel="ugc"><img src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-100px.png" alt="Paypal" /></a>
-<a href="https://www.buymeacoffee.com/rouvir" target="_blank" rel="ugc"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" /></a>
-<a href="https://nhantien.momo.vn/nMu93PhbO97" target="_blank" rel="ugc"><img src="https://static.mservice.io/img/logo-momo.png" alt="MoMo" height="42" width="42" /></a>
