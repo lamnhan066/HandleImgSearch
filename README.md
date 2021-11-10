@@ -1,5 +1,5 @@
 >> Author: Lâm Thành Nhân\
->> Email: ltnhan.st.94@gmail.com
+>> Email: lamnhan066@gmail.com
 # ENGLISH on [AutoItScript](https://www.autoitscript.com/forum/topic/201757-handleimgsearch-image-search-with-imagesearchdll-embedded/).
 
 ### Give me a coffee
