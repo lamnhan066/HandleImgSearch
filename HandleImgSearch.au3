@@ -1,6 +1,6 @@
 ; Author: Lâm Thành Nhân
-; Version: 1.0.4
-; Email: ltnhanst94@gmail.com
+; Version: 1.0.5
+; Email: lamnhan066@gmail.com
 ; Base on
 ; - ImageSearchDLL (Author: kangkeng 2008)
 ; - MemoryCall (Author: Joachim Bauch)
