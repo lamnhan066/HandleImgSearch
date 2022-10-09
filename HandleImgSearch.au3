@@ -40,7 +40,7 @@ Global $__HandleImgSearch_Opcode64
 Global $__HandleImgSearch_MemoryDll
 
 ; ===============================================================================================================================
-; Ảnh để tìm kiếm nên lưu dạng "24-bit Bitmap".
+; Image should be saved as "24-bit Bitmap".
 ; ===============================================================================================================================
 
 ; #Global Functions# ============================================================================================================
@@ -67,12 +67,12 @@ Global $__HandleImgSearch_MemoryDll
 ; Name ..........: _GlobalImgInit
 ; Description ...:	Khởi tạo cho global
 ; Syntax ........: _GlobalImgInit
-; Parameters ....: $Hwnd                	- [optional] Handle của cửa sổ.
-;                  $X, $Y, $Width, $Height 	- Vùng ảnh trong handle cần chụp. Mặc định là toàn ảnh chụp từ $hwnd.
-;                  $IsUser32            	- [optional] Sử dụng DllCall User32.dll thay vì _WinAPI_BitBlt (Thử để tìm cái phù hợp).. Default is False.
-;                  $IsDebug             	- [optional] Cho phép Debug. Default is False.
-;                  $Tolerance           	- [optional] Giá trị sai số màu. Default is 15.
-;                  $MaxImg	           		- [optional] Số ảnh tối đa để tìm kiếm. Default is 15.
+; Parameters ....: $Hwnd                	- [optional] Handle of the window.
+;                  $X, $Y, $Width, $Height 	- Area of the window that you want to capture. Default is whole $hwnd window.
+;                  $IsUser32            	- [optional] Use DllCall User32.dll instead of _WinAPI_BitBlt (You can try to figure it out).. Default is False.
+;                  $IsDebug             	- [optional] Allows Debug mode. Default is False.
+;                  $Tolerance           	- [optional] Variation of the color. Default is 15.
+;                  $MaxImg	           		- [optional] Max image results that you want to find. Default is 1000.
 ; ===============================================================================================================================
 Func _GlobalImgInit($Hwnd = $_HandleImgSearch_HWnd, _
 		$X = $_HandleImgSearch_X, _
@@ -98,10 +98,10 @@ EndFunc
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _GlobalImgCapture
-; Description ...: Chụp ảnh Global.
+; Description ...: Capture Global.
 ; Syntax ........: _GlobalImgCapture([$Hwnd = 0])
-; Parameters ....: $Hwnd                - Handle của cửa sổ nếu không dùng _GlobalImgInit để khai báo.
-; Return values .: @error khác 0 nếu có lỗi. Trả về Handle của Bitmap đã chụp.
+; Parameters ....: $Hwnd                - Handle of the window if you don't use _GlobalImgInit to declare.
+; Return values .: @error <> 0 if error occurs. Returns Handle of the captured Bitmap.
 ; ===============================================================================================================================
 Func _GlobalImgCapture($Hwnd = 0)
 	Local $Handle = $_HandleImgSearch_HWnd
@@ -135,10 +135,10 @@ EndFunc
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _GlobalGetBitmap
-; Description ...: Trả về Handle của Bitmap của Global.
+; Description ...: Returns hanle of the Bitmap.
 ; Syntax ........: _GlobalGetBitmap()
 ; Parameters ....:
-; Return values .: Handle của Bitmap đã khai báo
+; Return values .: Returns hanle of the Bitmap.
 ; ===============================================================================================================================
 Func _GlobalGetBitmap()
 	Return SetError(0, 0, $_HandleImgSearch_BitmapHandle)
@@ -146,14 +146,14 @@ EndFunc
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _GlobalImgSearchRandom
-; Description ...: Trả về toạ độ ngẫu nhiên của ảnh đã tìm được (Chỉ trả về vị trí ảnh đầu tiên tìm được)
+; Description ...: Return random coordinates of the first result
 ; Syntax ........: _GlobalImgSearchRandom($BmpLocal[, $IsReCapture = False[, $BmpSource = 0[, $IsRandom = True[, $Tolerance = $_HandleImgSearch_Tolerance]]]])
 ; Parameters ....: $BmpLocal            - Đường dẫn của ảnh BMP cần tìm.
-;                  $IsReCapture         - [optional] Chụp lại ảnh. Default is False.
-;                  $Tolerance           - [optional] an unknown value. Default is 15.
-;                  $BmpSource           - [optional] Handle của Bitmap nếu không sử dụng Global. Default is 0.
-;                  $IsRandom            - [optional] True sẽ trả về toạ độ ngẫu nhiên của ảnh đã tìm được, False sẽ là $X, $Y. Default is True.
-; Return values .: @error = 1 nếu có lỗi xảy ra. Trả về toạ độ ngẫu nhiên của ảnh đã tìm được($P[0] = $X, $P[1] = $Y).
+;                  $IsReCapture         - [optional] Capture again. Default is False.
+;                  $Tolerance           - [optional] Variation of color. Default is 15.
+;                  $BmpSource           - [optional] Handle of the Bitmap if it different to Global value. Default is 0.
+;                  $IsRandom            - [optional] Set to False if you don't want to radom the result. Default is True.
+; Return values .: @error = 1 if error occurs. Return random coordinates of the first result ($P[0] = $X, $P[1] = $Y).
 ; ===============================================================================================================================
 Func _GlobalImgSearchRandom($BmpLocal, $IsReCapture = False, $BmpSource = 0, $IsRandom = True, $Tolerance = $_HandleImgSearch_Tolerance, $Transparency = $_HandleImgSearch_Transparency, $MaxImg = $_HandleImgSearch_MaxImg)
 	Local $Pos = _GlobalImgSearch($BmpLocal, $IsReCapture, $BmpSource, $Tolerance, $Transparency, $MaxImg)
@@ -173,20 +173,20 @@ EndFunc
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _GlobalImgSearch
-; Description ...: Tìm ảnh trong Handle đã khai báo
+; Description ...: Find $BmpLocal in global $Hwnd window
 ; Syntax ........: _GlobalImgSearch
-; Parameters ....: $BmpLocal            - Đường dẫn của ảnh BMP cần tìm.
-;                  $IsReCapture         - [optional] Chụp lại ảnh. Default is False.
-;                  $BmpSource           - [optional] Handle của Bitmap nếu không sử dụng Global.
-;                  $Tolerance           - [optional] Độ lệch màu sắc của ảnh.
-;                  $MaxImg          	- [optional] Số kết quả trả về tối đa.
-; Return values .: Thành công: Returns a 2d array with the following format:
-;							$aCords[0][0]  		= Tổng số vị trí tìm được
-;							$aCords[$i][0]		= Toạ độ X
-;							$aCords[$i][1] 		= Toạ độ Y
-;							$aCords[$i][2] 		= Width của bitmap
-;							$aCords[$i][3] 		= Height của bitmap
-;					Lỗi: @error khác 0
+; Parameters ....: $BmpLocal            - Path of the finding bmp image.
+;                  $IsReCapture         - [optional] Re capture the window. Default is False.
+;                  $BmpSource           - [optional] Handle of Bitmap if not using Global.
+;                  $Tolerance           - [optional] Variation of color.
+;                  $MaxImg          	- [optional] Max number of results that you want to get.
+; Return values .: Success: Returns a 2d array with the following format:
+;							$aCords[0][0]  		= Total results number
+;							$aCords[$i][0]		= X
+;							$aCords[$i][1] 		= Y
+;							$aCords[$i][2] 		= Width of bitmap
+;							$aCords[$i][3] 		= Height of bitmap
+;					Error occurs: @error <> 0
 ; ===============================================================================================================================
 Func _GlobalImgSearch($BmpLocal, $IsReCapture = False, $BmpSource = 0, $Tolerance = $_HandleImgSearch_Tolerance, $Transparency = $_HandleImgSearch_Transparency, $MaxImg = $_HandleImgSearch_MaxImg)
 	Local $BMP = $_HandleImgSearch_BitmapHandle
@@ -199,7 +199,7 @@ Func _GlobalImgSearch($BmpLocal, $IsReCapture = False, $BmpSource = 0, $Toleranc
 		$BMP = $_HandleImgSearch_BitmapHandle
 	EndIf
 
-	; Clone Bitmap để tìm kiếm vì sau khi tìm toàn bộ Bitmap đều bị giải phóng.
+	; Clone Bitmap to search because after finding the entire Bitmap is released.
 	Local $Width = _GDIPlus_ImageGetWidth($BMP)
 	Local $Height = _GDIPlus_ImageGetHeight($BMP)
 	Local $BmpClone = _GDIPlus_BitmapCloneArea($BMP, 0, 0, $Width, $Height, $GDIP_PXF24RGB)
