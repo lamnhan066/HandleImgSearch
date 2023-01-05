@@ -379,7 +379,12 @@ Func _BmpImgSearch($SourceBmp, $FindBmp, $x = 0, $y = 0, $iWidth = -1, $iHeight 
 	Local $SourceBitmap = _GDIPlus_BitmapCreateFromFile($SourceBmp)
 	If @error Then Return SetError(1, 0, 0)
 
-	Local $pos = __ImgSearch(0, 0, _GDIPlus_ImageGetWidth($SourceBitmap), _GDIPlus_ImageGetHeight($SourceBitmap), $FindBmp, $SourceBitmap, $Tolerance, $Transparency, $MaxImg)
+	Local $Right = $iWidth + $x
+	If $iWidth = -1 Or $iWidth = Default Then $Right = _GDIPlus_ImageGetWidth($SourceBitmap) + $x
+	Local $Bottom = $iHeight + $y
+	If $iHeight = -1 Or $iHeight = Default Then $Bottom = _GDIPlus_ImageGetHeight($SourceBitmap) + $y
+
+	Local $pos = __ImgSearch($x, $y, $Right, $Bottom, $FindBmp, $SourceBitmap, $Tolerance, $Transparency, $MaxImg)
 
 	Return SetError(@error, 0, $pos)
 EndFunc   ;==>_BmpImgSearch
