@@ -545,7 +545,6 @@ EndFunc   ;==>_HandleCapture
 #Region Internal Functions
 ; Author: Lâm Thành Nhân
 Func __ImgSearch($BitmapSource, $BitmapFind, $x, $y, $right, $bottom, $Tolerance = 15, $Transparency = "", $MaxImg = 1000)
-Func __ImgSearch($x, $y, $right, $bottom, $BitmapFind, $BitmapSource, $Tolerance = 15, $Transparency = "", $MaxImg = 1000)
 	If $_HandleImgSearch_IsDebug Then
 		_GDIPlus_ImageSaveToFile($BitmapSource, @ScriptDir & "\HandleImgSearchSource.bmp")
 	EndIf
