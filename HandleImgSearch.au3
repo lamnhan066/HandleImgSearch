@@ -329,7 +329,7 @@ Func _HandleImgSearch($hwnd, $bmpLocal, $x = 0, $y = 0, $iWidth = -1, $iHeight =
 		EndIf
 	EndIf
 
-	Local $pos = __ImgSearch(0, 0, _GDIPlus_ImageGetWidth($BMP), _GDIPlus_ImageGetHeight($BMP), $bmpLocal, $BMP, $Tolerance, $Transparency, $MaxImg)
+	Local $pos = __ImgSearch($BMP, $bmpLocal, 0, 0, _GDIPlus_ImageGetWidth($BMP), _GDIPlus_ImageGetHeight($BMP), $Tolerance, $Transparency, $MaxImg)
 	Return SetError(@error, 0, $pos)
 EndFunc   ;==>_HandleImgSearch
 
@@ -397,7 +397,7 @@ Func _BmpImgSearch($SourceBmp, $FindBmp, $x = 0, $y = 0, $iWidth = -1, $iHeight 
 	Local $Bottom = $iHeight + $y
 	If $iHeight = -1 Or $iHeight = Default Then $Bottom = _GDIPlus_ImageGetHeight($SourceBitmap) + $y
 
-	Local $pos = __ImgSearch($x, $y, $Right, $Bottom, $FindBmp, $SourceBitmap, $Tolerance, $Transparency, $MaxImg)
+	Local $pos = __ImgSearch($SourceBitmap, $FindBmp, $x, $y, $Right, $Bottom, $Tolerance, $Transparency, $MaxImg)
 
 	Return SetError(@error, 0, $pos)
 EndFunc   ;==>_BmpImgSearch
@@ -544,6 +544,7 @@ EndFunc   ;==>_HandleCapture
 
 #Region Internal Functions
 ; Author: Lâm Thành Nhân
+Func __ImgSearch($BitmapSource, $BitmapFind, $x, $y, $right, $bottom, $Tolerance = 15, $Transparency = "", $MaxImg = 1000)
 Func __ImgSearch($x, $y, $right, $bottom, $BitmapFind, $BitmapSource, $Tolerance = 15, $Transparency = "", $MaxImg = 1000)
 	If $_HandleImgSearch_IsDebug Then
 		_GDIPlus_ImageSaveToFile($BitmapSource, @ScriptDir & "\HandleImgSearchSource.bmp")
