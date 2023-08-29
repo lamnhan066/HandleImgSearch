@@ -1,5 +1,5 @@
 ; Author: Lâm Thành Nhân
-; Version: 2.0.0
+; Version: 2.0.1
 ; Email: lamnhan066@gmail.com
 ; Base on
 ; - ImageSearchDLL (Author: kangkeng 2008)
@@ -255,7 +255,7 @@ EndFunc
 ; Description ...:
 ; Syntax ........: _GlobalGetPixel($X, $Y[, $IsReCapture = False[, $BmpSource = 0]])
 ; Parameters ....: $X, $Y               - Coordinates for obtaining the color..
-;                  $IsReCapture         - [optional] Capture the image. The default is set to False.
+;                  $IsReCapture         - [optional] Capture again the image. The default is set to False.
 ;                  $BmpSource           - [optional] Bitmap handle when not using Global. Default is 0.
 ; Return values .: Set @error = 1 in case of an error. Return color code in the format 0xRRGGBB.
 ; ===============================================================================================================================
