@@ -1,5 +1,5 @@
 ; Author: Lâm Thành Nhân
-; Version: 2.0.0
+; Version: 2.0.1
 ; Email: lamnhan066@gmail.com
 ; Base on
 ; - ImageSearchDLL (Author: kangkeng 2008)
@@ -150,10 +150,10 @@ EndFunc
 ; Name ..........: _GlobalImgSearchRandom
 ; Description ...: Return random coordinates of the first result
 ; Syntax ........: _GlobalImgSearchRandom($BmpLocal[, $IsReCapture = False[, $BmpSource = 0[, $IsRandom = True[, $Tolerance = $_HandleImgSearch_Tolerance]]]])
-; Parameters ....: $BmpLocal            - Đường dẫn của ảnh BMP cần tìm.
+; Parameters ....: $BmpLocal            - The path of the BMP image to look for.
 ;                  $IsReCapture         - [optional] Capture again. Default is False.
 ;                  $Tolerance           - [optional] Variation of color. Default is 15.
-;                  $Transparancy			- [optional] The color in HEX that you want to set as the transparency. Default is no transparent.	
+;                  $Transparancy		- [optional] The color in HEX that you want to set as the transparency. Default is no transparent.	
 ;													    (Eg. If you set "0xFFFFFF", all the White color in $BmpLocal will be ignored).	
 ;                  $BmpSource           - [optional] Handle of the Bitmap if it different to Global value. Default is 0.
 ;                  $IsRandom            - [optional] Set to False if you don't want to radom the result. Default is True.
@@ -183,7 +183,7 @@ EndFunc
 ;                  $IsReCapture         - [optional] Re capture the window. Default is False.
 ;                  $BmpSource           - [optional] Handle of Bitmap if not using Global.
 ;                  $Tolerance           - [optional] Variation of color.
-;                  $Transparancy			- [optional] The color in HEX that you want to set as the transparency. Default is no transparent.	
+;                  $Transparancy		- [optional] The color in HEX that you want to set as the transparency. Default is no transparent.	
 ;													    (Eg. If you set "0xFFFFFF", all the White color in $BmpLocal will be ignored).	
 ;                  $MaxImg          	- [optional] Max number of results that you want to get.
 ; Return values .: Success: Returns a 2d array with the following format:
@@ -254,10 +254,10 @@ EndFunc
 ; Name ..........: _GlobalGetPixel
 ; Description ...:
 ; Syntax ........: _GlobalGetPixel($X, $Y[, $IsReCapture = False[, $BmpSource = 0]])
-; Parameters ....: $X, $Y               - Toạ độ cần lấy màu.
-;                  $IsReCapture         - [optional] Chụp lại ảnh. Default is False.
-;                  $BmpSource           - [optional] Handle của Bitmap nếu không sử dụng Global. Default is 0.
-; Return values .: Set @error = 1 nếu xảy ra lỗi. Trả về mã màu dạng 0xRRGGBB
+; Parameters ....: $X, $Y               - Coordinates for obtaining the color..
+;                  $IsReCapture         - [optional] Capture again the image. The default is set to False.
+;                  $BmpSource           - [optional] Bitmap handle when not using Global. Default is 0.
+; Return values .: Set @error = 1 in case of an error. Return color code in the format 0xRRGGBB.
 ; ===============================================================================================================================
 Func _GlobalGetPixel($X, $Y, $IsReCapture = False, $BmpSource = 0)
 	Local $BMP = $_HandleImgSearch_BitmapHandle
@@ -535,7 +535,7 @@ Func _HandleCapture($hwnd = "", $x = 0, $y = 0, $Width = -1, $Height = -1, $IsBM
 
 	If $IsBMP Then Return SetError(0, 0, $BMP)
 
-	; Nên tạo lại $hBMP này vì có thể có lỗi nếu sử dụng $hBMP ở trên
+	; It is advisable to recreate this $hBMP because errors may occur if using the $hBMP above.
 	Local $hBMP = _GDIPlus_BitmapCreateHBITMAPFromBitmap($BMP)
 	_GDIPlus_BitmapDispose($BMP)
 
@@ -553,19 +553,19 @@ Func __ImgSearch($BitmapSource, $BitmapFind, $x, $y, $right, $bottom, $Tolerance
 	Local $Pos, $Error = 0
 	Dim $PosAr[1][4] = [[0,0,0,0]]
 
-	; Tính trước giá trị màu sắc pixel cần thay đổi khi tìm được kết quả
+	; Calculate in advace the color value of the pixel to be modified once the result is obtained.
 	Local $hBitmapFind = _GDIPlus_BitmapCreateFromFile($BitmapFind)
 
 	Local $BitmapFindWidth = _GDIPlus_ImageGetWidth($hBitmapFind)
 	Local $BitmapFindHeight = _GDIPlus_ImageGetHeight($hBitmapFind)
 
-	; Tính trước giá trị cho ô cần vẽ
+	; Calculate the value for the cell to be plotted in advance
 	Local $hBuffer = _GDIPlus_ImageGetGraphicsContext($BitmapSource)
 
- 	; Giải phóng
+ 	; Release/dispose.
 	_GDIPlus_BitmapDispose($hBitmapFind)
 
-	; Xử lý lại Tolerance và Transparency
+	; Adjust Tolerance and Transparency settings again.
 	If $Tolerance > 0 Then $BitmapFind = "*" & $Tolerance & " " & $BitmapFind
 	If $Transparency <> "" Then $BitmapFind = "*Trans" & $Transparency & " " & $BitmapFind
 
@@ -578,11 +578,11 @@ Func __ImgSearch($BitmapSource, $BitmapFind, $x, $y, $right, $bottom, $Tolerance
 			"str", $BitmapFind, _
 			"ptr", $hBitmapSource)
 		If @error Then
-			$Error = $i = 1 ? 1 : 0; Nếu không tìm được sẽ trả về @error 1
+			$Error = $i = 1 ? 1 : 0; If not found, return @error 1
 			ExitLoop
 		EndIf
 		If $Pos[0] = 0 Then
-			$Error = $i = 1 ? 1 : 0 ; Nếu không tìm được sẽ trả về @error 1
+			$Error = $i = 1 ? 1 : 0 ; If not found, return @error 1
 			ExitLoop
 		EndIf
 		Local $PosSplit = StringSplit($Pos[0], "|", 2)
@@ -593,14 +593,14 @@ Func __ImgSearch($BitmapSource, $BitmapFind, $x, $y, $right, $bottom, $Tolerance
 		$PosAr[$i][2] = $PosSplit[3]
 		$PosAr[$i][3] = $PosSplit[4]
 
-		; Set lại màu sắc của vị trí ảnh vừa tìm được
+		; Reset the color of the located image position.
 		_GDIPlus_GraphicsFillRect($hBuffer, $PosSplit[1], $PosSplit[2], $BitmapFindWidth, $BitmapFindHeight)
 		_WinAPI_DeleteObject($hBitmapSource)
 
-		; Xác định lại toạ độ $y để không phải tìm từ đầu nếu tìm nhiều ảnh
+		; Recompute the $y coordinate to avoid starting the search from the beginning when searching for multiple images.
 		$y = $PosSplit[2]
 
-		; Thao tác với ImageSearchExt đã xoá ảnh $hBitmapFind
+		; Perform operations with ImageSearchExt after deleting the $hBitmapFind image.
 		$hBitmapSource = _GDIPlus_BitmapCreateHBITMAPFromBitmap($BitmapSource)
 	Next
 
