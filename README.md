@@ -85,6 +85,12 @@ Chú thích đầu mỗi hàm trong HandleImgSearch.au3 và vi dụ cụ thể c
       + Cải thiên tốc độ tìm kiếm.
     - 29/06/2020:
       + Sửa lỗi hàm _GlobalImgWaitExist.
+    - 14/04/2023: v2.0.0
+      + Thêm tham số $Transparency để đặt màu nền cho ảnh,
+      + Tách riêng UDF BinaryCall.au3, MemoryDll.au3.
+      + Dịch UDF Header sang tiếng Anh.
+    - 30/08/2023: v2.0.1
+      + Dịch phần còn lại của UDF sang tiếng Anh.
 
 ## Buy me a coffee
 
